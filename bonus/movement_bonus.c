@@ -1,5 +1,5 @@
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 int	move_frog(t_data *data, int oy, int ox)
 {
@@ -19,6 +19,9 @@ int	move_frog(t_data *data, int oy, int ox)
 	{
 		return (2);
 	}
+	if (data->map->cells[data->player->y - oy][data->player->x - ox]
+		.type == 'X')
+		return (3);
 	data->player->y -= oy;
 	data->player->x -= ox;
 	data->player->moves++;

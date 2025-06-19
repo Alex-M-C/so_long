@@ -1,5 +1,5 @@
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 void	free_map(t_map *map)
 {
@@ -42,6 +42,8 @@ int	get_sprite_index(char tile)
 		return (3);
 	else if (tile == 'E')
 		return (4);
+	else if (tile == 'X')
+		return (6);
 	return (-1);
 }
 
@@ -62,6 +64,8 @@ void	load_sprites(t_data *data)
 			"textures/exit.xpm", &w, &h);
 	data->sprites[5] = mlx_xpm_file_to_image(data->mlx,
 			"textures/frog_exit.xpm", &w, &h);
+	data->sprites[6] = mlx_xpm_file_to_image(data->mlx,
+			"textures/snake.xpm", &w, &h);
 }
 
 void	update_camera(t_data *data, int dx, int dy)
@@ -92,6 +96,3 @@ void	update_camera(t_data *data, int dx, int dy)
 			data->camera_y++;
 	}
 }
-
-
-

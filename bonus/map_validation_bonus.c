@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 /*
 Checks if all the lines are the same length and establish the MAP.X length for
@@ -69,7 +69,7 @@ static void	assign_cells(char **line, t_map *map, int *unique_c_count)
 			(*unique_c_count)++;
 		else if ((*line)[x] == 'C')
 			map->eggs++;
-		else if ((*line)[x] != '1' && (*line)[x] != '0')
+		else if ((*line)[x] != '1' && (*line)[x] != '0' && (*line)[x] != 'X')
 		{
 			free(*line);
 			free(map->cells[map->y]);
