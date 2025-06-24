@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   window.c                                           :+:      :+:    :+:   */
+/*   window_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aleconst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -28,25 +28,12 @@ static int	close_window(t_data *data, int lose)
 	free(data->mlx);
 	free_map(data->map);
 	if (lose == 1)
+	{
+		ft_printf("YOU DIED!\n");
 		start_game(data->map->filename);
+	}
 	exit(0);
 	return (0);
-}
-
-void	draw_move_counter(t_data *data)
-{
-	char	*text;
-	char	*number;
-
-	number = ft_itoa(data->player->moves);
-	if (!number)
-		return ;
-	text = ft_strjoin("Moves: ", number);
-	free(number);
-	if (!text)
-		return ;
-	mlx_string_put(data->mlx, data->win, 10, 20, 0xFFFFFF, text);
-	free(text);
 }
 
 static void	draw_frog(t_data *data)
@@ -109,7 +96,7 @@ static int	key_hook(int keycode, t_data *data)
 		moved = move_frog(data, -1, 0);
 	else if (keycode == D)
 		moved = move_frog(data, 0, -1);
-	if (moved == 1)
+	if (moved == 1 || moved == 2)
 		draw_map(data);
 	if (moved == 2)
 	{
@@ -138,7 +125,11 @@ void	create_window(t_map *map, t_player *player)
 		data.sprites[i] = NULL;
 	data.camera_x = 0;
 	data.camera_y = 0;
-	load_sprites(&data);
+	if (load_sprites(&data) == 0)
+	{
+		write(2, "Error\nMissing/can't open sprites\n", 33);
+		close_window(&data, 0);
+	}
 	center_camera_on_player(&data);
 	draw_map(&data);
 	mlx_key_hook(data.win, key_hook, &data);

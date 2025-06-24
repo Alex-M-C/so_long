@@ -3,7 +3,7 @@ NAME = so_long
 
 #Compilator and flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 #Variables
 FILES = main.c map_validation.c so_long_utils.c path_finder.c window.c movement.c

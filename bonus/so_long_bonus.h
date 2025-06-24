@@ -1,5 +1,17 @@
-#ifndef SO_LONG_H
-# define SO_LONG_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aleconst <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/19 12:22:48 by aleconst          #+#    #+#             */
+/*   Updated: 2025/06/19 12:22:50 by aleconst         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 
 # include "../minilibx/mlx.h"
 # include "../libft/libft.h"
@@ -62,7 +74,7 @@ typedef struct s_data
 
 void	start_game(char *filename);
 
-t_map	map_extraction(int map_fd, int *unique_c_count, t_map map);
+void	map_extraction(int map_fd, int *unique_c_count, t_map *map);
 
 int		check_enclosed(t_map map);
 
@@ -74,11 +86,13 @@ int		get_sprite_index(char tile);
 
 int		move_frog(t_data *data, int oy, int ox);
 
-void	load_sprites(t_data *data);
+int		load_sprites(t_data *data);
 
 void	update_camera(t_data *data, int dx, int dy);
 
-void 	center_camera_on_player(t_data *data);
+void	center_camera_on_player(t_data *data);
+
+void	draw_move_counter(t_data *data);
 
 void	free_map(t_map *map);
 

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   movement_bonus.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aleconst <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/19 12:20:45 by aleconst          #+#    #+#             */
+/*   Updated: 2025/06/19 12:20:47 by aleconst         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
@@ -17,6 +28,7 @@ int	move_frog(t_data *data, int oy, int ox)
 	if (data->map->cells[data->player->y - oy][data->player->x - ox].type == 'E'
 		&& data->map->eggs == 0)
 	{
+		data->player->moves++;
 		return (2);
 	}
 	if (data->map->cells[data->player->y - oy][data->player->x - ox]
@@ -52,3 +64,18 @@ void	center_camera_on_player(t_data *data)
 		data->camera_y = max_y;
 }
 
+void	draw_move_counter(t_data *data)
+{
+	char	*text;
+	char	*number;
+
+	number = ft_itoa(data->player->moves);
+	if (!number)
+		return ;
+	text = ft_strjoin("Moves: ", number);
+	free(number);
+	if (!text)
+		return ;
+	mlx_string_put(data->mlx, data->win, 10, 20, 0xFFFFFF, text);
+	free(text);
+}

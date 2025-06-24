@@ -90,7 +90,7 @@ static int	key_hook(int keycode, t_data *data)
 		moved = move_frog(data, -1, 0);
 	else if (keycode == D)
 		moved = move_frog(data, 0, -1);
-	if (moved == 1)
+	if (moved == 1 || moved == 2)
 	{
 		ft_printf("Moves: %i\n", data->player->moves);
 		draw_map(data);
@@ -118,7 +118,11 @@ void	create_window(t_map *map, t_player *player)
 		data.sprites[i] = NULL;
 	data.camera_x = 0;
 	data.camera_y = 0;
-	load_sprites(&data);
+	if (load_sprites(&data) == 0)
+	{
+		write(2, "Error\nMissing/can't open sprites\n", 33);
+		close_window(&data);
+	}
 	center_camera_on_player(&data);
 	draw_map(&data);
 	mlx_key_hook(data.win, key_hook, &data);

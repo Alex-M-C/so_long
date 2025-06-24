@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aleconst <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/19 11:47:47 by aleconst          #+#    #+#             */
+/*   Updated: 2025/06/19 11:47:50 by aleconst         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "so_long.h"
 
@@ -45,10 +56,11 @@ int	get_sprite_index(char tile)
 	return (-1);
 }
 
-void	load_sprites(t_data *data)
+int	load_sprites(t_data *data)
 {
 	int	w;
 	int	h;
+	int	i;
 
 	data->sprites[0] = mlx_xpm_file_to_image(data->mlx,
 			"textures/rock.xpm", &w, &h);
@@ -62,6 +74,14 @@ void	load_sprites(t_data *data)
 			"textures/exit.xpm", &w, &h);
 	data->sprites[5] = mlx_xpm_file_to_image(data->mlx,
 			"textures/frog_exit.xpm", &w, &h);
+	i = 0;
+	while (i < 6)
+	{
+		if (!data->sprites[i])
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 void	update_camera(t_data *data, int dx, int dy)
@@ -92,6 +112,3 @@ void	update_camera(t_data *data, int dx, int dy)
 			data->camera_y++;
 	}
 }
-
-
-

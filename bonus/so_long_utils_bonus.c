@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long_utils_bonus.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aleconst <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/19 12:21:01 by aleconst          #+#    #+#             */
+/*   Updated: 2025/06/19 12:21:04 by aleconst         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
@@ -47,10 +58,11 @@ int	get_sprite_index(char tile)
 	return (-1);
 }
 
-void	load_sprites(t_data *data)
+int	load_sprites(t_data *data)
 {
 	int	w;
 	int	h;
+	int	i;
 
 	data->sprites[0] = mlx_xpm_file_to_image(data->mlx,
 			"textures/rock.xpm", &w, &h);
@@ -66,6 +78,13 @@ void	load_sprites(t_data *data)
 			"textures/frog_exit.xpm", &w, &h);
 	data->sprites[6] = mlx_xpm_file_to_image(data->mlx,
 			"textures/snake.xpm", &w, &h);
+	i = -1;
+	while (++i < 7)
+	{
+		if (!data->sprites[i])
+			return (0);
+	}
+	return (1);
 }
 
 void	update_camera(t_data *data, int dx, int dy)

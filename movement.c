@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   movement.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aleconst <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/19 13:15:54 by aleconst          #+#    #+#             */
+/*   Updated: 2025/06/19 13:15:57 by aleconst         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "so_long.h"
 
@@ -17,6 +28,7 @@ int	move_frog(t_data *data, int oy, int ox)
 	if (data->map->cells[data->player->y - oy][data->player->x - ox].type == 'E'
 		&& data->map->eggs == 0)
 	{
+		data->player->moves++;
 		return (2);
 	}
 	data->player->y -= oy;
@@ -48,4 +60,3 @@ void	center_camera_on_player(t_data *data)
 	else if (max_y >= 0 && data->camera_y > max_y)
 		data->camera_y = max_y;
 }
-

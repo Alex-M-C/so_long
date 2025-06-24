@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_validation.c                                   :+:      :+:    :+:   */
+/*   map_validation_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aleconst <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -83,33 +83,32 @@ static void	assign_cells(char **line, t_map *map, int *unique_c_count)
 /*
 Extracts all the info and/or characters from the .ber file and builds the map.
 */
-t_map	map_extraction(int map_fd, int *unique_c_count, t_map map)
+void	map_extraction(int map_fd, int *unique_c_count, t_map *map)
 {
 	char	*line;
 
-	map.cells = NULL;
-	map.eggs = 0;
-	map.x = 0;
-	map.y = 0;
+	map->cells = NULL;
+	map->eggs = 0;
+	map->x = 0;
+	map->y = 0;
 	line = get_next_line(map_fd);
 	while (line)
 	{
-		map_x_len(&line, &map);
-		map.cells = grow_row(map.cells, map.y);
-		if (!map.cells)
+		map_x_len(&line, map);
+		map->cells = grow_row(map->cells, map->y);
+		if (!map->cells)
 			exit(1);
-		map.cells[map.y] = malloc(sizeof(t_cell) * map.x);
-		if (!map.cells[map.y])
+		map->cells[map->y] = malloc(sizeof(t_cell) * map->x);
+		if (!map->cells[map->y])
 		{
 			free(line);
-			err_exit(&map, "Error\nMalloc failed", 1);
+			err_exit(map, "Error\nMalloc failed", 1);
 		}
-		assign_cells(&line, &map, unique_c_count);
-		map.y++;
+		assign_cells(&line, map, unique_c_count);
+		map->y++;
 		free(line);
 		line = get_next_line(map_fd);
 	}
-	return (map);
 }
 
 /*

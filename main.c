@@ -28,26 +28,33 @@ static void	error_checker(t_map *map, t_player *player, int unique_c_count)
 		err_exit(map, "Error\nMap must have reacheable exit/collectibles", 1);
 }
 
-static void	file_format(char *name)
+static void	file_format(const char *path)
 {
-	char	**parts;
-	int		i;
+	const char	*filename;
+	const char	*dot;
+	const char	*c;
+	int			valid_char_found;
 
-	if (ft_strlen(name) < 5)
+	filename = ft_strrchr(path, '/');
+	if (filename)
+		filename++;
+	else
+		filename = path;
+	if (ft_strlen(filename) < 5)
 		err_exit(NULL, "Error\nMap file format must be .ber", 1);
-	parts = ft_split(name, '.');
-	if (!parts)
-		err_exit(NULL, "Error\nMalloc failed", 1);
-	i = 0;
-	while (parts[i])
-		i++;
-	i--;
-	if (ft_strncmp(parts[i], "ber", 3) != 0)
+	dot = ft_strrchr(filename, '.');
+	if (!dot || ft_strncmp(dot, ".ber", 4) != 0)
+		err_exit(NULL, "Error\nMap file format must be .ber", 1);
+	c = filename;
+	valid_char_found = 0;
+	while (c < dot)
 	{
-		ft_free_wa(parts);
-		err_exit(NULL, "Error\nMap file format must be .ber", 1);
+		if (*c != '.')
+			valid_char_found = 1;
+		c++;
 	}
-	ft_free_wa(parts);
+	if (!valid_char_found)
+		err_exit(NULL, "Error\nInvalid map file name", 1);
 }
 
 int	main(int argc, char **argv)
@@ -64,7 +71,7 @@ int	main(int argc, char **argv)
 		err_exit(NULL, "Error\nFile don't exists or don't have permissions", 1);
 	file_format(argv[1]);
 	unique_c_count = 0;
-	map = map_extraction(map_fd, &unique_c_count, map);
+	map_extraction(map_fd, &unique_c_count, &map);
 	close(map_fd);
 	player.moves = 0;
 	error_checker(&map, &player, unique_c_count);
