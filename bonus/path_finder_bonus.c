@@ -32,7 +32,8 @@ static void	check_cells(t_map *map, int *ispath, int x, int y)
 {
 	if (x < 0 || x >= map->x || y < 0 || y >= map->y)
 		return ;
-	else if (map->cells[y][x].visited == 1 || map->cells[y][x].type == '1')
+	else if (map->cells[y][x].visited == 1 || map->cells[y][x].type == '1'
+		|| map->cells[y][x].type == 'X')
 		return ;
 	else if (map->cells[y][x].type == 'C')
 		map->eggs--;
